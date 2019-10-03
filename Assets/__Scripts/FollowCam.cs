@@ -5,65 +5,63 @@ using UnityEngine;
 
 
 public class FollowCam : MonoBehaviour {
-    static public GameObject POI; // The static point of interest
-
-    [Header("Set in Inspector")]
+    static public FollowCam S; // a FollowCam Singleton
+                               // fields set in the Unity Inspector pane
     public float easing = 0.05f;
-    public Vector2 minXY = Vector2.zero;
-
-    [Header("Set Dynamically")]
-    public float camZ; // The desired z pos of the camera
-
-    private void Awake()
+    public Vector2 minXY;
+    public bool _____________________________;
+    // fields set dynamically
+    public GameObject poi; // The point of interest
+    public float camZ; // The desired Z pos of the camera
+    void Awake()
     {
+        S = this;
         camZ = this.transform.position.z;
     }
-
-    private void FixedUpdate()
+    void Update()
     {
+        // if there's only one line following an if, it doesn't need braces
+        if (poi == null) return; // return if there is no poi
+                                 // Get the position of the poi
+
+        //Commented out line below
+        // Vector3 destination = poi.transform.position;
+
+        // This is where it said void FixedUpdate () {
+
         Vector3 destination;
-        // If there is no poi, return to P: [0,0,0]
-        if (POI == null)
+        // If there is no poi, return to P:[0,0,0]
+        if (poi == null)
         {
             destination = Vector3.zero;
         }
         else
         {
             // Get the position of the poi
-            destination = POI.transform.position;
+            destination = poi.transform.position;
             // If poi is a Projectile, check to see if it's at rest
-            if (POI.tag == "Projectile")
+            if (poi.tag == "Projectile")
             {
                 // if it is sleeping (that is, not moving)
-                if (POI.GetComponent<Rigidbody>().IsSleeping())
+                if (poi.rigidbody.IsSleeping())
                 {
                     // return to default view
+                    poi = null;
                     // in the next update
-                    POI = null;
                     return;
                 }
             }
         }
-
-
-        // Limit the X & Y to Max values
-        // the slingshot starts in -x, -y territory, so don't
-        // start moving until the projectile gets
-        // past the 0,0 point of the world
-
+        //End of the last pasted block of code
+        // Limit the X & Y to minimum values
         destination.x = Mathf.Max(minXY.x, destination.x);
         destination.y = Mathf.Max(minXY.y, destination.y);
-
         // Interpolate from the current Camera position toward destination
         destination = Vector3.Lerp(transform.position, destination, easing);
-
-        // Force destination.z to be camZ to keep the camera far enough away
+        // Retain a destination.z of camZ
         destination.z = camZ;
-
         // Set the camera to the destination
         transform.position = destination;
-
-        // Set the orthographicSize of the Camera to keep Ground in view
-        Camera.main.orthographicSize = destination.y + 10;
+        //Ending
     }
 }
