@@ -50,7 +50,7 @@ public class Slingshot : MonoBehaviour {
         // Start it at the launchPoint
         projectile.transform.position = launchPos;
         // Set it to isKinematic for now
-        projectile.rigidbody.isKinematic = true;
+        projectile.GetComponent<Rigidbody>().isKinematic = true;
     }
 
 
@@ -79,9 +79,9 @@ public class Slingshot : MonoBehaviour {
         {
             // The mouse has been released
             aimingMode = false;
-            projectile.rigidbody.isKinematic = false;
-            projectile.rigidbody.velocity = -mouseDelta * velocityMult;
-            FollowCam.S.poi = projectile;
+            projectile.GetComponent<Rigidbody>().isKinematic = false;
+            projectile.GetComponent<Rigidbody>().velocity = -mouseDelta * velocityMult;
+            FollowCam.POI = projectile;
             projectile = null;
             MissionDemolition.ShotFired();
 

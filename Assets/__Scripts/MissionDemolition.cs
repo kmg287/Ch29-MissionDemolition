@@ -123,15 +123,15 @@ public class MissionDemolition : MonoBehaviour
         switch (S.showing)
         {
             case "Slingshot":
-                FollowCam.S.poi = null;
+                FollowCam.POI = null;
                 break;
 
             case "Castle":
-                FollowCam.S.poi = S.castle;
+                FollowCam.POI = S.castle;
                 break;
 
             case "Both":
-                FollowCam.S.poi = GameObject.Find("ViewBoth");
+                FollowCam.POI = GameObject.Find("ViewBoth");
                 break;
         }
     }

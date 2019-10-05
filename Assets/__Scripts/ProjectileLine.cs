@@ -98,11 +98,11 @@ public class ProjectileLine : MonoBehaviour {
         if (poi == null)
         {
             // If there is no poi, search for one
-            if (FollowCam.S.poi != null)
+            if (FollowCam.POI != null)
             {
-                if (FollowCam.S.poi.tag == "Projectile")
+                if (FollowCam.POI.tag == "Projectile")
                 {
-                    poi = FollowCam.S.poi;
+                    poi = FollowCam.POI;
                 }
                 else
                 {
@@ -116,7 +116,7 @@ public class ProjectileLine : MonoBehaviour {
         }
         // If there is a poi, it's loc is added every FixedUpdate
         AddPoint();
-        if (poi.rigidbody.IsSleeping())
+        if (poi.GetComponent<Rigidbody>().IsSleeping())
         {
             // Once the poi is sleeping, it is cleared
             poi = null;
